@@ -1,8 +1,36 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 50px;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+	background-image: url("/images/backgrounds.png");
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-attachment: fixed;
+	background-size: 100% 100%;
 }
 
 a {
   color: #00B7FF;
+}
+
+#content {
+	
+}
+#sidebar {
+	
+}
+#info {
+	background: white;
+}
+
+.infobq
+{
+	position: relative;
+    line-height: 2;
+    border-left: 3px solid #c69f73;
+    font-weight: 400;
+    padding: 0 18px;
+    color: #137292;
 }

@@ -2,10 +2,16 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
+var groupRouter = require('./routes/groups');
+var examRouter = require('./routes/exams');
+var testRouter = require('./routes/test');
 
 var app = express();
 
@@ -19,8 +25,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(session({
+  secret: "sosecret",
+  saveUninitialized: false,
+  resave: false
+}));
+app.use(function(req, res, next) {
+  res.locals.id = req.session.id;
+  res.locals.user = req.session.user;
+  res.locals.lg = req.session.lg;
+  res.locals.login = req.session.login;
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/login', loginRouter);
+app.use('/groups', groupRouter);
+app.use('/exams', examRouter);
+app.use('/test', testRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
