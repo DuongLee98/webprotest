@@ -102,7 +102,7 @@
 <script src="/javascripts/load.js"></script>
 <script src="/javascripts/socket.io.js"></script>
 <script>
-	var socket = io('http://0.0.0.0:3000');
+	var socket = io('http://35.240.184.30:3000');
 	socket.emit('login', {'user': '<%= user %>', 'pass': '<%= pass %>'});
 	loadPage();
 	let NewExam = {};
