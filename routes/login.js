@@ -20,6 +20,7 @@ router.route('/')
 				req.session.user = data.user
 				req.session.lg = info.msg;
 				req.session.login = true;
+				req.session.pass = data.pass;
 				if (info.msg == "teacher")
 					return res.redirect('/users/t/'+data.user);
 				if (info.msg == "student")

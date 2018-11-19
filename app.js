@@ -35,6 +35,7 @@ app.use(session({
 app.use(function(req, res, next) {
   res.locals.id = req.session.id;
   res.locals.user = req.session.user;
+  res.locals.pass = req.session.pass;
   res.locals.lg = req.session.lg;
   res.locals.login = req.session.login;
   next();
