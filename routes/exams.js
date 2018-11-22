@@ -13,15 +13,12 @@ router.get('/:eid(\\d+)', async function(req, res, next){
 	{
 		return res.redirect('/login');
 	}
-	var ws = {};
-	ws.eid = data.eid;
-	// res.render('exam')
-	var info = {};
-	info.data = {};
-	info.data.skuser = res.locals.user;
-	info.data.skpass = res.locals.pass;
-	info.data.eid = data.eid;
-	res.render('exam', info.data);
+	if (res.locals.lg == "teacher")
+	{
+		var ws = res.locals;
+		ws.eid = data.eid;
+		res.render('teacher/exam', ws);
+	}
 })
 
 router.get('/:eid(\\d+)/edit', async function(req, res, next){
@@ -30,15 +27,32 @@ router.get('/:eid(\\d+)/edit', async function(req, res, next){
 	{
 		return res.redirect('/login');
 	}
-	var ws = {};
-	ws.eid = data.eid;
-	// res.render('exam')
-	var info = {};
-	info.data = {};
-	info.data.skuser = res.locals.user;
-	info.data.skpass = res.locals.pass;
-	info.data.eid = data.eid;
-	res.render('exam', info.data);
+	if (res.locals.lg == "teacher")
+	{
+		var ws = res.locals;
+		ws.eid = data.eid;
+		res.render('teacher/exam_edit', ws);
+	}
+	
+})
+
+router.get('/:eid(\\d+)/do', async function(req, res, next){
+	var data = req.params;
+	if (res.locals.login != true)
+	{
+		return res.redirect('/login');
+	}
+	if (res.locals.lg == "student")
+	{
+		var ws = res.locals;
+		ws.eid = data.eid;
+		// res.render('exam')
+		res.render('student/exam_do', ws);
+	}
+	else
+	{
+		res.send("you aren't student")
+	}
 })
 
 router.get('/create', async function(req, res, next){
@@ -47,7 +61,10 @@ router.get('/create', async function(req, res, next){
 	{
 		return res.redirect('/login');
 	}
-	res.render('create', res.locals);
+	if (res.locals.lg == "teacher")
+	{
+		res.render('teacher/exam_create', res.locals);
+	}
 })
 
 function standardized(time)

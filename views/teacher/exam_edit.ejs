@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+<title>Create Exam</title>
+</head>
+
+<body>
+	<div id="check_mark" class="check_mark" style="display: none;">
+	  <div class="sa-icon sa-success animate">
+	    <span class="sa-line sa-tip animateSuccessTip"></span>
+	    <span class="sa-line sa-long animateSuccessLong"></span>
+	    <div class="sa-placeholder"></div>
+	    <div class="sa-fix"></div>
+	  </div>
+	</div>
+	<div id="load"><div id="iloader"><div id="iloadertext">0%</div></div><div id="loader"></div></div>
+	<div class="container-fluid w-75" id="myDiv">
+		<nav class="navbar navbar-light bg-transparent">
+		  <a class="navbar-brand" href="#">
+		    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+		    Bootstrap
+		  </a>
+		</nav>
+	
+		<div class="row">
+			<div class="col-8 rounded mr-auto bg-white p-4" id="content">
+				<form id="form" method="post">
+					
+					
+				</form>
+				<div class="form-group row">
+					<div class="col-sm-3 mx-auto">
+						<button onclick="setExam()" type="submit" class="btn btn-primary">Update</button>
+					</div>
+					<div class="col-sm-3 mx-auto">
+						<button onclick="AddQ()" type="button" class="btn btn-primary">Add Question</button>
+					</div>
+				</div>
+			</div>	
+			
+
+			<div class="col-4 rounded bg-transparent" id="sidebar">
+				<div class="rounded p-2 mb-1" id="info">
+					<div class="card text-white bg-success mb-3">
+					  <div class="card-header">
+					    General
+					  </div>
+					  <div class="card-body">
+					    <form>
+					    	 <div class="form-group row">
+							    
+							    <div class="col-sm-12">
+							      <input type="text" name="eid" class="form-control" id="eid" disabled="disabled">
+							    </div>
+						  	</div>
+						  	<div class="form-group row">
+							    
+							    <div class="col-sm-12">
+							      <input type="text" name="eid" class="form-control" id="created" disabled="disabled">
+							    </div>
+						  	</div>
+						 	 <div class="form-group row">
+							    
+							    <div class="col-sm-12">
+							      <textarea id="ename" name="ename" class="form-control" rows="2"></textarea>
+							    </div>
+						  	</div>
+						  	<div class="form-group row">
+							  	
+								  <div class="col-sm-12">
+								    <input class="form-control" type="datetime-local" name="timestart" value="" id="timestart">
+							  	</div>
+							</div>
+							<div class="form-group row">
+							  
+							  <div class="col-sm-12">
+							    <input class="form-control" type="datetime-local" name="timeend" value="" id="timeend">
+							  </div>
+							</div>
+							<div class="form-group row">
+							  	<div class="col-sm-12">
+								  <select class="custom-select" id="type" name="type">
+									  <div class="col-sm-12">
+									    <option id="Math" name="Math" value="Math">Math</option>
+								        <option id="Physics" name="Physics" value="Physics">Physics</option>
+								        <option id="Chemistry" name="Chemistry" value="Chemistry">Chemistry</option>
+								        <option id="Civic education" name="Civic education" value="Civic education">Civic education</option>
+									  </div>
+									</select>
+								</div>
+							</div>
+							<div class="input-group mb-3">
+							  <div class="input-group-prepend">
+							    <div class="input-group-text">
+							      <input type="checkbox" id="publish" aria-label="Checkbox for following text input">
+							    </div>
+							  </div>
+							  <label class="form-control">Publish</label>
+							</div>
+						  	<div class="form-group row">
+							    <div class="col-sm-5 mx-auto">
+							      <button onclick="setGeneral()" type="button" class="btn btn-primary">Save</button>
+							    </div>
+						  	</div>
+						</form>
+					  </div>
+					</div>
+				</div>
+
+				<div class="rounded p-2" id="tool">
+					<div class="form-control mb-1"><span class="input-group-text">Accept For Group Do Contest</span></div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	let tuser = '<%= tuser %>';
+	let pass = '<%= pass %>';
+	let eid = <%= eid %>;
+</script>
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/load.js"></script>
+<script src="/javascripts/socket.io.js"></script>
+<script src="/javascripts/teacher/editexam.js"></script>
+
+</html>

@@ -17,14 +17,19 @@ router.route('/')
 			var info = await webservice.login(res.locals, 'login', 'rlogin', data);
 			if(info.cd == 0)
 			{
-				req.session.user = data.user
 				req.session.lg = info.msg;
 				req.session.login = true;
 				req.session.pass = data.pass;
 				if (info.msg == "teacher")
+				{
+					req.session.tuser = data.user
 					return res.redirect('/users/t/'+data.user);
+				}
 				if (info.msg == "student")
+				{
+					req.session.suser = data.user
 					return res.send(info)
+				}
 			}
 			else
 			{

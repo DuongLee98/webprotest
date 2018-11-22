@@ -19,7 +19,7 @@ router.get('/t/:user',async function(req, res, next) {
 	if (info.cd == 0)
 	{
 		info.data.tuser = ws.tuser;
-		res.render('tuser', info.data);
+		res.render('teacher/user', info.data);
 	}
 });
 
