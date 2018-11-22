@@ -1,1 +1,1 @@
-const httpSocket = 'http://0.0.0.0:3000';
+const httpSocket = 'http://35.240.184.30:3000';
