@@ -255,6 +255,11 @@ socket.on('rlogin', function(data)
 						Success();
 						setTimeout(showPage, 2000);
 					}
+					else
+					{
+						alert(info.msg);
+						showPage();
+					}
 				})
 			}
 			else
@@ -276,6 +281,11 @@ socket.on('rlogin', function(data)
 		{
 			location.reload();
 		}
+		else
+		{
+			alert(info.msg);
+			showPage();
+		}
 	})
 
 	socket.on('rsetGeneralExamload', function(data){
@@ -287,6 +297,11 @@ socket.on('rlogin', function(data)
 		{
 			location.reload();
 		}
+		else
+		{
+			alert(info.msg);
+			showPage();
+		}
 	})
 
 	socket.on('rsetAcceptListGroupForExamload', function(data){
@@ -297,6 +312,11 @@ socket.on('rlogin', function(data)
 		if(data.cd == 0)
 		{
 			location.reload();
+		}
+		else
+		{
+			alert(info.msg);
+			showPage();
 		}
 	})
 });
@@ -345,8 +365,8 @@ function setGeneral()
 	}
 	data.type = document.getElementById('type').value
 	data.publish = document.getElementById('publish').checked
-	data.timestart = standardized(document.getElementById('timestart').value)
-	data.timeend = standardized(document.getElementById('timeend').value)
+	data.timestart = moment(document.getElementById('timestart').value).utc().valueOf()/1000;
+	data.timeend = moment(document.getElementById('timeend').value).utc().valueOf()/1000;
 	console.log(data);
 	socket.emit('setGeneralExam', data);
 	loadPage();
@@ -356,14 +376,15 @@ function setGeneral()
 function setViewGeneral()
 {
 	document.getElementById('eid').value = AllData.eid;
-	document.getElementById('created').value = AllData.created;
+	document.getElementById('created').value = moment(parseInt(AllData.created, 10)*1000).format("YYYY-MM-DD HH:mm:ss");
 	document.getElementById('ename').value = AllData.name;
 	document.getElementById('type').value = AllData.type;
 	document.getElementById('publish').checked = AllData.publish;
-	var dat = AllData.timeStart.split('-')
-	document.getElementById('timestart').value = dateConvertor(dat[0])+'T'+timeConvertor(dat[1]);
-	var dat = AllData.timeEnd.split('-')
-	document.getElementById('timeend').value = dateConvertor(dat[0])+'T'+timeConvertor(dat[1]);
+	if (AllData.timeEnd != "" && AllData.timeStart!="")
+	{
+		document.getElementById('timestart').value = moment(parseInt(AllData.timeStart, 10)*1000).format("YYYY-MM-DDTHH:mm");
+		document.getElementById('timeend').value = moment(parseInt(AllData.timeEnd, 10)*1000).format("YYYY-MM-DDTHH:mm");
+	}
 }
 
 function setAcceptGroup()

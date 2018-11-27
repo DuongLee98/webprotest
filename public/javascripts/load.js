@@ -44,7 +44,8 @@ function standardized(time)
 {
 	var DaT = time.split('T');
 	var D = DaT[0].split('-');
-	var T = getTime(tConvert(DaT[1]));
+	console.log(DaT[1]);
+	var T = getTime(tConvert(DaT[1]+":00"));
 	return D[0]+'/'+D[1]+'/'+D[2]+'-'+T;
 }
 

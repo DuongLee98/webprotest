@@ -44,14 +44,9 @@ router.get('/t/:tuser/exam',async function(req, res, next) {
 	{
 		return res.redirect('/login');
 	}
-	var ws = {};
+	var ws = res.locals;
 	ws.tuser = data.tuser;
-	var info = await webservice.getInfoAllExamTeacherMake(res.locals, 'getInfoAllExamTeacherMake', 'rgetInfoAllExamTeacherMake', ws)
-	if (info.cd == 0)
-	{
-		// res.send(info.data);
-		res.render('tlistexam', info.data);
-	}
+	res.render('teacher/user_listexam', ws);
 });
 
 // router.post('/:user',async function(req, res, next) {

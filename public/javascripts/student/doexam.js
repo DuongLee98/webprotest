@@ -66,7 +66,7 @@ socket.on('rlogin', function(data)
 		if (info.cd == 0)
 		{
 			AllData = info.data;
-			TimeEnd24 = separationTime(AllData.timeEnd);
+			TimeEnd = AllData.timeEnd;
 			setViewGeneral()
 			length = info.data.qlen;
 			for (var i=0; i<length; i++)
@@ -85,7 +85,7 @@ socket.on('rlogin', function(data)
 		if (info.cd == 0)
 		{
 			var dif = caculateTimeLeft(info.data);
-			document.getElementById('tool').innerHTML = dif.hour+" hour : "+dif.minute+" minute : "+dif.sec+" second left";
+			document.getElementById('tool').innerHTML = dif;
 			setTimeout(getTimeStamp, 1000);
 		}
 	})
@@ -120,21 +120,12 @@ function submit()
 	loadPage();
 }
 
-function caculateTimeLeft(TimeNow12)
+function caculateTimeLeft(TimeNow)
 {
-	TimeNow24 = separationTime(TimeNow12);
-	let dif = {};
-	var b = new Date(TimeEnd24.year, TimeEnd24.month, TimeEnd24.day, TimeEnd24.hour, TimeEnd24.minute, TimeEnd24.sec, 0);
-	var a = new Date(TimeNow24.year, TimeNow24.month, TimeNow24.day, TimeNow24.hour, TimeNow24.minute, TimeNow24.sec, 0);
-	var d = parseInt(b-a);
-	dif.sec = parseInt(d/1000)%60;
-	dif.minute = parseInt(d/1000/60)%60;
-	dif.hour = parseInt(d/1000/60/60);
-	if (d<=0)
-		dif.done = true;
-	else
-		dif.done = false;
-	return dif;
+	var ms = moment(TimeEnd*1000).diff(TimeNow*1000);
+	var d = moment.duration(ms);
+	var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+	return s;
 }
 
 
@@ -179,12 +170,13 @@ function setExam()
 function setViewGeneral()
 {
 	document.getElementById('eid').value = AllData.eid;
-	document.getElementById('created').value = AllData.created;
+	document.getElementById('created').value = moment(parseInt(AllData.created, 10)*1000).format("YYYY-MM-DD HH:mm:ss");
 	document.getElementById('ename').value = AllData.name;
 	document.getElementById('type').value = AllData.type;
 	document.getElementById('publish').checked = AllData.publish;
-	var dat = AllData.timeStart.split('-')
-	document.getElementById('timestart').value = dateConvertor(dat[0])+'T'+timeConvertor(dat[1]);
-	var dat = AllData.timeEnd.split('-')
-	document.getElementById('timeend').value = dateConvertor(dat[0])+'T'+timeConvertor(dat[1]);
+	if (AllData.timeEnd != "" && AllData.timeStart!="")
+	{
+		document.getElementById('timestart').value = moment(parseInt(AllData.timeStart, 10)*1000).format("YYYY-MM-DDTHH:mm");
+		document.getElementById('timeend').value = moment(parseInt(AllData.timeEnd, 10)*1000).format("YYYY-MM-DDTHH:mm");
+	}
 }
