@@ -67,6 +67,15 @@ router.get('/create', async function(req, res, next){
 	}
 })
 
+router.get('/find', async function(req, res, next){
+	var data = req.params;
+	if (res.locals.login != true)
+	{
+		return res.redirect('/login');
+	}
+	return res.render('exam_find', res.locals);
+})
+
 function standardized(time)
 {
 	var DaT = time.split('T');

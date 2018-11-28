@@ -68,7 +68,7 @@
 
  	var user = '<%= tuser %>';
  	var pass = '<%= pass %>';
- 	var tuser = '<%= tuser %>';
+ 	var tuser = '<%= user %>';
  	var socket = io(httpSocket);
 
  	socket.emit('login', {'user': user, 'pass': pass});
@@ -136,7 +136,7 @@
  		}
  		for (var i=0; i<len; i++)
  		{
- 			QRCode.toCanvas(document.getElementById('QR'+i), data.arr[i].eid, function (error) {
+ 			QRCode.toCanvas(document.getElementById('QR'+i), 'EX'+data.arr[i].eid, function (error) {
 			    if (error) console.error(error)
 			    console.log('success!');
 		  	})
@@ -146,10 +146,10 @@
  	function Detail(data)
  	{
  		document.getElementById('detail').innerHTML = "";
- 		document.getElementById('detail').innerHTML += "<p>Len Do: "+data.len+"</p><hr>";
- 		for (var i=0; i<data.len; i++)
+ 		document.getElementById('detail').innerHTML += "<p>Student: "+data.len+"</p><hr>";
+ 		for (var i=data.len-1; i>=0; i--)
  		{
- 			document.getElementById('detail').innerHTML += "<p> > "+data.arr[i].user + ": " + data.arr[i].point + "/" + data.qlen+"</p><hr>";
+ 			document.getElementById('detail').innerHTML += "<p> > "+'<a href="/users/s/'+data.arr[i].user+'">'+data.arr[i].user+'</a>' + ": " + data.arr[i].point + "/" + data.qlen+"</p><hr>";
  		}
  	}
 

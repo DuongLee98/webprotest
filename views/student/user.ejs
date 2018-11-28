@@ -1,9 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+<title><%= name%></title>
 </head>
 <body>
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
 
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">Detail Student</h4>
+	        <button type="button" class="close" onclick="close()" data-dismiss="modal">&times;</button>
+	      </div>
+
+	      <!-- Modal body -->
+	      <div class="modal-body" id = 'detail' data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+	      	Loading....
+	      </div>
+
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	      </div>
+
+	    </div>
+	  </div>
+	</div>
+	<div id="check_mark" class="check_mark" style="display: none;">
+	  <div class="sa-icon sa-success animate">
+	    <span class="sa-line sa-tip animateSuccessTip"></span>
+	    <span class="sa-line sa-long animateSuccessLong"></span>
+	    <div class="sa-placeholder"></div>
+	    <div class="sa-fix"></div>
+	  </div>
+	</div>
+	<div id="load"><div id="iloader"><div id="iloadertext"></div></div><div id="loader"></div></div>
+	<div class="container-fluid w-75" id="myDiv">
+	
+		<div class="row">
+			<div class="col-8 rounded mr-auto bg-white p-2" id="content">
+				<div class="list-group">
+				  <a href="/exams/find" class="list-group-item list-group-item-action list-group-item-success">Scan QR Exam</a>
+				  <a href="#" data-toggle="modal" data-target="#myModal" onclick="viewAllPointOfStudent()" class="list-group-item list-group-item-action list-group-item-success">View All Test Scores</a>
+				</div>
+			</div>
+			<div class="col-4 rounded bg-transparent" id="sidebar">
+				<div class="rounded p-2" id="info">
+					<canvas class="rounded border border-primary d-block mx-auto" id="canvas"></canvas>
+					<hr>
+					<blockquote class="infobq"><p id="name">Name: <font color="black"><%= name %></font></p></blockquote>
+					<blockquote class="infobq"><p id="phone">Phone: <font color="black"><%= phone %></font></p></blockquote>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/load.js"></script>
+<script src="/javascripts/socket.io.js"></script>
+<script type="text/javascript" src="/javascripts/instascan.min.js"></script>
+<script src="/javascripts/qrcode.js"></script>
+<script type="text/javascript">
+	var QRCode = require('qrcode')
+	var canvas = document.getElementById('canvas')
+  	QRCode.toCanvas(document.getElementById('canvas'), 'SV<%= suser %>', function (error) {
+	    if (error) console.error(error)
+	    console.log('success!');
+  	})
+
+  	var user = '<%= suser %>';
+ 	var pass = '<%= pass %>';
+ 	var suser = '<%= user %>';
+ 	var socket = io(httpSocket);
+ 	socket.emit('login', {'user': user, 'pass': pass});
+ 	loadPage();
+ 	socket.on('rlogin', function(info){
+ 		if (info.cd == 0)
+ 		{
+ 			Success();
+			setTimeout(showPage, 2000);
+ 		}
+ 		else
+ 		{
+ 			alert(data.msg);
+			setTimeout(showPage, 2000);
+ 		}
+ 	});
+
+ 	socket.on('rviewAllPointOfStudent', function(info){
+ 		if (info.cd == 0)
+ 		{
+ 			Detail(info.data);
+ 			Success();
+			setTimeout(showPage, 2000);
+ 		}
+ 		else
+ 		{
+ 			alert(data.msg);
+			setTimeout(showPage, 2000);
+ 		}
+ 	});
+
+ 	function viewAllPointOfStudent()
+ 	{
+ 		data = {};
+ 		data.suser = suser;
+ 		loadPage();
+ 		socket.emit('viewAllPointOfStudent', data);
+ 	}
+
+ 	function Detail(data)
+ 	{
+ 		document.getElementById('detail').innerHTML = "";
+ 		document.getElementById('detail').innerHTML += "<p>Exam: "+data.len+"</p><hr>";
+ 		for (var i=data.len-1; i>=0; i--)
+ 		{
+ 			document.getElementById('detail').innerHTML += "<p> > "+'<a href="/exams/'+data.arr[i].eid+'/do">'+data.arr[i].eid+'</a>' + ": " + data.arr[i].point + "/" + data.arr[i].qlen+"</p><hr>";
+ 		}
+ 	}
+</script>
 </html>

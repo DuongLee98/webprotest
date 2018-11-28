@@ -270,6 +270,11 @@ socket.on('rlogin', function(data)
 				setTimeout(showPage, 2000);
 			}
 		}
+		else
+		{
+			alert(info.msg);
+			window.history.back();
+		}
 	})
 
 	socket.on('rsetExamload', function(data){

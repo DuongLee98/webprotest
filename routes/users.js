@@ -19,7 +19,26 @@ router.get('/t/:user',async function(req, res, next) {
 	if (info.cd == 0)
 	{
 		info.data.tuser = ws.tuser;
+		info.data.user = data.user;
 		res.render('teacher/user', info.data);
+	}
+});
+
+router.get('/s/:user',async function(req, res, next) {
+	var data = req.params;
+	if (res.locals.login != true)
+	{
+		return res.redirect('/login');
+	}
+	var ws = {};
+
+	ws.suser = data.user;
+	var info = await webservice.getInfoOfStudent(res.locals, 'getInfoOfStudent', 'rgetInfoOfStudent', ws);
+	if (info.cd == 0)
+	{
+		info.data.suser = ws.suser;
+		info.data.user = data.user;
+		res.render('student/user', info.data);
 	}
 });
 
@@ -45,7 +64,7 @@ router.get('/t/:tuser/exam',async function(req, res, next) {
 		return res.redirect('/login');
 	}
 	var ws = res.locals;
-	ws.tuser = data.tuser;
+	ws.user = data.tuser;
 	res.render('teacher/user_listexam', ws);
 });
 

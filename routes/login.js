@@ -32,7 +32,7 @@ router.route('/')
 				if (info.msg == "student")
 				{
 					req.session.suser = data.user
-					return res.send(info)
+					return res.redirect('/users/s/'+data.user);
 				}
 			}
 			else
