@@ -76,9 +76,14 @@ socket.on('rlogin', function(data)
 				qarr.push(t);
 			}
 			setup();
-			showPage();
+			
 			getTimeStamp();
 		}
+		else
+		{
+			alert(info.msg);
+		}
+		showPage();
 	})
 
 	socket.on('rgetTimeStamp', function(info){
@@ -94,6 +99,11 @@ socket.on('rlogin', function(data)
 		if (info.cd == 0)
 		{
 			alert(info.data);
+			showPage();
+		}
+		else
+		{
+			alert(info.msg);
 			showPage();
 		}
 	})

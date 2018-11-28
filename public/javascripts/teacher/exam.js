@@ -102,6 +102,11 @@ socket.on('rlogin', function(data)
 						Success();
 						setTimeout(showPage, 2000);
 					}
+					else
+					{
+						alert(data.msg);
+						setTimeout(showPage, 2000);
+					}
 				})
 			}
 			else
@@ -118,10 +123,14 @@ socket.on('rlogin', function(data)
 		document.getElementById('iloadertext').innerHTML = data;
 	})
 	socket.on('rsetAcceptListGroupForExam', function(data){
-		console.log(data);
 		if(data.cd == 0)
 		{
 			location.reload();
+		}
+		else
+		{
+			alert(data.msg);
+			setTimeout(showPage, 2000);
 		}
 	})
 });

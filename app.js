@@ -42,7 +42,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', indexRouter);
+app.use('/', loginRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/groups', groupRouter);

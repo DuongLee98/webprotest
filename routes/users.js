@@ -1,5 +1,5 @@
 var express = require('express');
-var webservice = require('../../protest/webservice');
+var webservice = require('../../protest_secured/webservice');
 var router = express.Router();
 
 /* GET users listing. */
@@ -49,20 +49,5 @@ router.get('/t/:tuser/exam',async function(req, res, next) {
 	res.render('teacher/user_listexam', ws);
 });
 
-// router.post('/:user',async function(req, res, next) {
-// 	var data = req.params;
-// 	if (res.locals.login != true)
-// 	{
-// 		return res.redirect('/login')
-// 	}
-// 	res.send(req.body.firstname);
-	// var ws = {};
-	// ws.tuser = data.user;
-	// var info = await webservice.getInfoOfTeacher(res.locals, 'getInfoOfTeacher', 'rgetInfoOfTeacher', ws);
-	// if (info.cd == 0)
-	// {
-	// 	res.render('tuser', info.data);
-	// }
-	// res.send(data.user + ' - ' + res.locals.user + ' ' + res.locals.lg + ' ' +res.locals.login+'\r\n'+JSON.stringify(info));
-// });
+
 module.exports = router;

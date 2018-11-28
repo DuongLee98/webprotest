@@ -3,7 +3,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
-<title>Create Exam</title>
+<title>Exam</title>
 </head>
 
 <body>
@@ -17,11 +17,7 @@
 	</div>
 	<div id="load"><div id="iloader"><div id="iloadertext">0%</div></div><div id="loader"></div></div>
 	<div class="container-fluid w-75" id="myDiv">
-		<nav class="navbar navbar-light bg-transparent">
-		  <a class="navbar-brand" href="#">
-		    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-		    Bootstrap
-		  </a>
+		
 		</nav>
 	
 		<div class="row">
@@ -30,6 +26,7 @@
 					
 					
 				</form>
+				<button type="button" onclick="toEdit()" class="btn btn-success">Edit</a></button>
 			</div>	
 			
 
@@ -114,4 +111,10 @@
 <script src="/javascripts/load.js"></script>
 <script src="/javascripts/socket.io.js"></script>
 <script src="/javascripts/teacher/exam.js"></script>
+<script type="text/javascript">
+	function toEdit()
+	{
+		location.href = '/exams/'+eid+'/edit';
+	}
+</script>
 </html>

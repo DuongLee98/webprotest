@@ -7,22 +7,12 @@
 </head>
 <body>
 	<div class="container-fluid w-75">
-		<nav class="navbar navbar-light bg-transparent">
-		  <a class="navbar-brand" href="#">
-		    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-		    Bootstrap
-		  </a>
-		</nav>
 	
 		<div class="row">
 			<div class="col-8 rounded mr-auto bg-white p-2" id="content">
-				<div class="list-group list-group-horizontal">
-				  <a href="#" class="list-group-item list-group-item-action active">
-				    Infomation
-				  </a>
-				  <a href="/users/t/<%= tuser %>/group/" class="list-group-item list-group-item-action">Manage Group</a>
-				  <a href="/users/t/<%= tuser %>/exam/" class="list-group-item list-group-item-action">Manage Exam</a>
-				  <a href="/exams/create" class="list-group-item list-group-item-action">Create Exam</a>
+				<div class="list-group">
+				  <a href="/users/t/<%= tuser %>/exam/" class="list-group-item list-group-item-action list-group-item-success">Manage Exam</a>
+				  <a href="/exams/create" class="list-group-item list-group-item-action list-group-item-success">Create Exam</a>
 				</div>
 			</div>
 			<div class="col-4 rounded bg-transparent" id="sidebar">
