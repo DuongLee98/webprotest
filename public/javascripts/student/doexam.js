@@ -90,7 +90,7 @@ socket.on('rlogin', function(data)
 		if (info.cd == 0)
 		{
 			var dif = caculateTimeLeft(info.data);
-			document.getElementById('tool').innerHTML = dif;
+			document.getElementById('tool').innerHTML = 'Time Left: '+dif;
 			setTimeout(getTimeStamp, 1000);
 		}
 	})

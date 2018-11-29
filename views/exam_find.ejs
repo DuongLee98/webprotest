@@ -10,10 +10,9 @@
   
     <div class="row">
       <div class="col-8 rounded mr-auto bg-white p-2" id="content">
-        <div id="loadingMessage" hidden="">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
-        <canvas class="rounded border border-primary d-block mx-auto mb-1" id="canvas2" style="height: 320px; width: auto;" hidden=""></canvas>
+        
         <input type="text" class="form-control" id="outputData">
-       
+        <button type="button" onclick="getStr()" class="btn btn-primary">Do</button>
       </div>
       <div class="col-4 rounded bg-transparent" id="sidebar">
         <div class="rounded p-2" id="info">
@@ -26,81 +25,23 @@
 <script type="text/javascript" src="/javascripts/instascan.min.js"></script>
 <script src="/javascripts/qrcode.js"></script>
 <script>
-    var video = document.createElement("video");
-    var track;
-    var canvasElement = document.getElementById("canvas2");
-    var canvas = canvasElement.getContext("2d");
-    var loadingMessage = document.getElementById("loadingMessage");
-    var outputContainer = document.getElementById("output");
-    var outputMessage = document.getElementById("outputMessage");
-    var outputData = document.getElementById("outputData");
+    
 
-    function drawLine(begin, end, color) {
-      canvas.beginPath();
-      canvas.moveTo(begin.x, begin.y);
-      canvas.lineTo(end.x, end.y);
-      canvas.lineWidth = 4;
-      canvas.strokeStyle = color;
-      canvas.stroke();
-    }
-
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
-      video.srcObject = stream;
-      track = stream.getTracks()[0];
-      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-      video.play();
-      requestAnimationFrame(tick);
-    });
-
-    function open()
+    function getStr()
     {
-      // var id = document.getElementById('outputData').value;
-      
-    }
-
-    function getStr(str)
-    {
-      if (str.substr(0, 2)=="EX")
+      str = document.getElementById('outputData').value;
+      console.log(Number.isInteger(str));
+      var x = parseInt(str);
+      if (!x)
       {
-        id = str.substr(2, )
-        if (Number.isInteger(id))
-        {
-          return "Khong phai EID";
-        }
-        else
-        {
-          location.href = '/exams/'+id+'/do';
-        }
+        alert("Khong phai EID");
       }
-      return "Loi dinh dang";
+      else
+      {
+        location.href = '/exams/'+str+'/do';
+      }
     }
 
-  function tick() {
-      loadingMessage.innerText = "⌛ Loading video..."
-      if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        loadingMessage.hidden = true;
-        canvasElement.hidden = false;
 
-        canvasElement.height = video.videoHeight;
-        canvasElement.width = video.videoWidth;
-        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        var code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: "dontInvert",
-        });
-        if (code) {
-          drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-          drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-          drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-          drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-          outputData.parentElement.hidden = false;
-          outputData.value = getStr(code.data);
-        } else {
-          // outputMessage.hidden = false;
-          // outputData.parentElement.hidden = true;
-        }
-      }
-      requestAnimationFrame(tick);
-    } 
   </script>
 </html>
